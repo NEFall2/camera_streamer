@@ -40,9 +40,10 @@ class _CameraStreamAppState extends State<CameraStreamApp> {
       if (cameras.isNotEmpty) {
         _controller = CameraController(
           cameras.first,
-          ResolutionPreset.veryHigh, // Mode 1080p (1920x1080)
+          ResolutionPreset.veryHigh, // Mode 1080p
+          fps: 60, // Demande 60 FPS au matériel
           enableAudio: false,
-          imageFormatGroup: ImageFormatGroup.bgra8888, // Stabilité iOS
+          imageFormatGroup: ImageFormatGroup.bgra8888,
         );
         await _controller!.initialize();
       }
@@ -70,8 +71,8 @@ class _CameraStreamAppState extends State<CameraStreamApp> {
 
         _controller?.startImageStream((CameraImage image) {
           final now = DateTime.now();
-          // Limite à 1 image toutes les 50ms (20 FPS max) pour protéger la mémoire en 1080p
-          if (now.difference(_lastFrameSent).inMilliseconds < 50) return;
+          // Limite à 1 image toutes les 16ms (~60 FPS)
+          if (now.difference(_lastFrameSent).inMilliseconds < 16) return;
           if (_isProcessing || !_isStreaming) return;
 
           _isProcessing = true;
@@ -123,7 +124,7 @@ class _CameraStreamAppState extends State<CameraStreamApp> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Cam Streamer 1080p'),
+        title: const Text('Flutter Cam Streamer 1080p 60FPS'),
         backgroundColor: Colors.blueGrey,
       ),
       body: Column(
