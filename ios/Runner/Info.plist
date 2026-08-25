@@ -67,8 +67,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>Cette application utilise la caméra pour diffuser le flux vidéo vers le PC.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Cette application a besoin du micro pour le flux vidéo.</string>
+	<string>This app requires access to the camera to capture photos and scan documents.</string>
 </dict>
 </plist>
